@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Отчеты{% endblock %}
+
+{% block content %}
+<div class="reports-container">
+    <h1>Отчеты</h1>
+    <form method="post">
+        <label for="task_id">Выберите задачу:</label>
+        <select name="task_id" id="task_id" required>
+            <option value="">-- Выберите задачу --</option>
+            {% for task in tasks %}
+                <option value="{{ task.id }}">{{ task.order.user.name }} - {{ task.order.car.model }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="description">Описание выполненной работы:</label>
+        <textarea name="description" id="description" required></textarea>
+        <br>
+        <button type="submit">Отправить отчет</button>
+    </form>
+</div>
+{% endblock %}

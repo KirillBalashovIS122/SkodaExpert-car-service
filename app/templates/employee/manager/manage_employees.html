@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Управление сотрудниками{% endblock %}
+
+{% block content %}
+<div class="manage-employees-container">
+    <h1>Управление сотрудниками</h1>
+    <form method="post">
+        <label for="name">Имя:</label>
+        <input type="text" name="name" id="name" required>
+        <br>
+        <label for="role">Роль:</label>
+        <select name="role" id="role" required>
+            <option value="mechanic">Механик</option>
+            <option value="manager">Менеджер</option>
+        </select>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" name="password" id="password" required>
+        <br>
+        <button type="submit">Добавить сотрудника</button>
+    </form>
+    <h2>Список сотрудников</h2>
+    <ul>
+        {% for employee in employees %}
+            <li>{{ employee.name }} - {{ employee.role }} - {{ employee.email }}</li>
+        {% else %}
+            <li>Нет сотрудников.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

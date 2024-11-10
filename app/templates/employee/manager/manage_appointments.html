@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Управление записями{% endblock %}
+
+{% block content %}
+<div class="manage-appointments-container">
+    <h1>Управление записями</h1>
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                Заказ #{{ appointment.id }} - {{ appointment.user.name }} - {{ appointment.car.model }}
+                <ul>
+                    {% for service in appointment.services %}
+                        <li>{{ service.service_name }} - {{ service.price }} руб.</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% else %}
+            <li>Нет записей.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

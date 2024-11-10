@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Автосервис SkodaExpert{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/csrf.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>Автосервис SkodaExpert</h1>
+        <nav>
+            <a href="{{ url_for('main.index') }}">Главная</a>
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('main.client_dashboard') }}">Личный кабинет</a>
+                <a href="{{ url_for('main.logout') }}">Выход</a>
+            {% else %}
+                <a href="{{ url_for('main.login') }}">Вход</a>
+                <a href="{{ url_for('main.register') }}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Автосервис SkodaExpert</p>
+    </footer>
+</body>
+</html>

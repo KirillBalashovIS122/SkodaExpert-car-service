@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Выбор услуг{% endblock %}
+
+{% block content %}
+<div class="services-container">
+    <h1>Выберите услуги</h1>
+    <form method="post">
+        <ul>
+            {% for service in services %}
+                <li>
+                    <input type="checkbox" name="services" value="{{ service.id }}">
+                    <label>{{ service.service_name }} - {{ service.price }} руб.</label>
+                </li>
+            {% else %}
+                <li>Нет доступных услуг.</li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Записаться на ремонт</button>
+    </form>
+    <a href="{{ url_for('main.client_dashboard') }}" class="button">Назад в личный кабинет</a>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Панель сотрудника{% endblock %}
+
+{% block content %}
+<div class="employee-dashboard-container">
+    <h1>Добро пожаловать, {{ employee.name }}!</h1>
+    <div class="dashboard-buttons">
+        {% if employee.role == 'mechanic' %}
+            <a href="{{ url_for('main.tasks') }}" class="button">Задачи</a>
+            <a href="{{ url_for('main.reports') }}" class="button">Отчеты</a>
+        {% elif employee.role == 'manager' %}
+            <a href="{{ url_for('main.manage_employees') }}" class="button">Управление сотрудниками</a>
+            <a href="{{ url_for('main.manage_services') }}" class="button">Управление услугами</a>
+            <a href="{{ url_for('main.manage_appointments') }}" class="button">Управление записями</a>
+            <a href="{{ url_for('main.statistics') }}" class="button">Статистика</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+<form method="POST" action="{{ url_for('main.appointments') }}" class="form-container">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <!-- Остальные поля формы для записи на ремонт -->
+    <label for="full_name">ФИО:</label>
+    <input type="text" id="full_name" name="full_name" required>
+
+    <label for="car_vin">VIN автомобиля:</label>
+    <input type="text" id="car_vin" name="car_vin" required>
+
+    <label for="car_plate">Госномер автомобиля:</label>
+    <input type="text" id="car_plate" name="car_plate" required>
+
+    <label for="phone">Телефон:</label>
+    <input type="text" id="phone" name="phone" required>
+
+    <label for="car_year">Год выпуска:</label>
+    <input type="number" id="car_year" name="car_year" required>
+
+    <label for="slot_id">Слот для записи:</label>
+    <select id="slot_id" name="slot_id" required>
+        {% for slot in available_slots %}
+            <option value="{{ slot.id }}">{{ slot.appointment_date }} - {{ slot.start_time }} до {{ slot.end_time }}</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Записаться на ремонт</button>
+</form>

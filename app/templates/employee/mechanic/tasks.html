@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Задачи{% endblock %}
+
+{% block content %}
+<div class="tasks-container">
+    <h1>Задачи</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>
+                Заказ #{{ task.order.id }} - {{ task.order.user.name }} - {{ task.order.car.model }}
+                <form method="post" action="{{ url_for('main.reports') }}">
+                    <input type="hidden" name="task_id" value="{{ task.id }}">
+                    <textarea name="description" placeholder="Описание выполненной работы"></textarea>
+                    <button type="submit">Отправить отчет</button>
+                </form>
+            </li>
+        {% else %}
+            <li>Нет доступных задач.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
