@@ -6,6 +6,7 @@
 <div class="manage-services-container">
     <h1>Управление услугами</h1>
     <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label for="service_name">Название услуги:</label>
         <input type="text" name="service_name" id="service_name" required>
         <br>

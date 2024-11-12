@@ -252,3 +252,28 @@ footer {
 .services-container .button:hover {
     background-color: #45a049; /* Темно-зеленый цвет */
 }
+
+/* Стили для страницы успешного завершения записи */
+.appointment-success-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.appointment-success-container h1 {
+    color: #4CAF50; /* Зеленый цвет */
+}
+
+.appointment-success-container p {
+    margin-bottom: 20px;
+}
+
+.appointment-success-container .btn-primary,
+.appointment-success-container .btn-info {
+    display: inline-block;
+    margin: 0 10px;
+}

@@ -10,6 +10,7 @@
             <li>
                 Заказ #{{ task.order.id }} - {{ task.order.user.name }} - {{ task.order.car.model }}
                 <form method="post" action="{{ url_for('main.reports') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="task_id" value="{{ task.id }}">
                     <textarea name="description" placeholder="Описание выполненной работы"></textarea>
                     <button type="submit">Отправить отчет</button>

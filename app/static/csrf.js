@@ -1,4 +1,3 @@
-// Пример JavaScript для CSRF-защиты
 function addCSRFToken() {
     var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     document.querySelectorAll('form').forEach(function(form) {

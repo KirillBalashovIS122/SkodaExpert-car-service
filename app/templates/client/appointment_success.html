@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Запись успешна{% endblock %}
+
+{% block content %}
+<div class="appointment-success-container">
+    <h1>Запись успешна!</h1>
+    <p>Ваша запись на услуги была успешно оформлена.</p>
+    <a href="{{ url_for('main.client_dashboard') }}" class="btn btn-primary">Вернуться в личный кабинет</a>
+    <a href="{{ url_for('main.generate_order_pdf', order_id=order_id) }}" class="btn btn-info">Скачать заказ-наряд</a>
+</div>
+{% endblock %}

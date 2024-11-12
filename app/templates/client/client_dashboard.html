@@ -1,45 +1,45 @@
 {% extends "base.html" %}
 
+{% block title %}Личный кабинет{% endblock %}
+
 {% block content %}
-    <div class="dashboard-container">
-        <!-- Профиль клиента -->
-        <section class="profile-card">
-            <h2>Добро пожаловать, {{ user.name }}!</h2>
-            <div class="profile-details">
-                <p><strong>Имя:</strong> {{ user.name }}</p>
-                <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>Телефон:</strong> {{ user.phone }}</p>
-                <p><strong>Дата регистрации:</strong> {{ user.created_at }}</p>
-            </div>
-            <a href="{{ url_for('main.edit_profile') }}" class="btn-primary">Редактировать профиль</a>
-        </section>
+<div class="dashboard-container">
+    <!-- Профиль клиента -->
+    <section class="profile-card">
+        <h2>Добро пожаловать, {{ user.name }}!</h2>
+        <div class="profile-details">
+            <p><strong>Имя:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Телефон:</strong> {{ user.phone }}</p>
+            <p><strong>Дата регистрации:</strong> {{ user.created_at }}</p>
+        </div>
+        <a href="{{ url_for('main.edit_profile') }}" class="btn btn-primary">Редактировать профиль</a>
+    </section>
 
-        <!-- Заказы клиента -->
-        <section class="orders-card">
-            <h3>Ваши заказы:</h3>
-            {% if orders %}
-                <ul class="order-list">
-                    {% for order in orders %}
-                        <li class="order-item">
-                            <strong>Заказ №{{ order.id }}:</strong> {{ order.status }}<br>
-                            <em>{{ order.created_at }}</em>
-                            <a href="{{ url_for('main.view_order', order_id=order.id) }}" class="btn-info">Посмотреть заказ</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>У вас нет заказов.</p>
-            {% endif %}
-        </section>
-
-        <!-- Доступные услуги -->
-        <section class="services-card">
-            <h3>Доступные услуги:</h3>
-            <ul class="services-list">
-                {% for service in services %}
-                    <li>{{ service.name }} - {{ service.description }}</li>
+    <!-- Заказы клиента -->
+    <section class="orders-card">
+        <h3>Ваши заказы:</h3>
+        {% if orders %}
+            <ul class="order-list">
+                {% for order in orders %}
+                    <li class="order-item">
+                        <strong>Заказ №{{ order.id }}:</strong> {{ order.status }}<br>
+                        <em>{{ order.created_at }}</em>
+                        <a href="{{ url_for('main.view_order', order_id=order.id) }}" class="btn btn-info">Посмотреть заказ</a>
+                    </li>
                 {% endfor %}
             </ul>
-        </section>
-    </div>
+        {% else %}
+            <p>У вас нет заказов.</p>
+        {% endif %}
+    </section>
+
+    <!-- Доступные услуги -->
+    <section class="services-card">
+        <h3>Доступные услуги:</h3>
+        <form method="post" action="{{ url_for('main.select_services') }}">
+            <button type="submit" class="btn btn-primary">Записаться на услуги</button>
+        </form>
+    </section>
+</div>
 {% endblock %}

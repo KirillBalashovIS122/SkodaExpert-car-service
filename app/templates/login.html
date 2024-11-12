@@ -1,39 +1,29 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
+
+{% block title %}Вход{% endblock %}
 
 {% block content %}
-    <div class="dashboard-container">
-        <!-- Профиль клиента -->
-        <section class="profile-card">
-            <h2>Добро пожаловать!</h2>
-            <!-- Дополнительный контент для страницы входа -->
-        </section>
-
-        <!-- Заказы клиента -->
-        <section class="orders-card">
-            <h3>Ваши заказы:</h3>
-            {% if orders %}
-                <ul class="order-list">
-                    {% for order in orders %}
-                        <li class="order-item">
-                            <strong>Заказ №{{ order.id }}:</strong> {{ order.status }}<br>
-                            <em>{{ order.created_at }}</em>
-                            <a href="{{ url_for('main.view_order', order_id=order.id) }}" class="btn btn-info">Посмотреть заказ</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>У вас нет заказов.</p>
-            {% endif %}
-        </section>
-
-        <!-- Доступные услуги -->
-        <section class="services-card">
-            <h3>Доступные услуги:</h3>
-            <ul class="services-list">
-                {% for service in services %}
-                    <li>{{ service.name }} - {{ service.description }}</li>
-                {% endfor %}
+<div class="form-container">
+    <h1>Вход</h1>
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <br>
+        <label>Пароль:</label>
+        <input type="password" name="password" required>
+        <br>
+        <button type="submit">Войти</button>
+    </form>
+    <a href="{{ url_for('main.register') }}" class="register-link">Нет аккаунта? Зарегистрироваться</a>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
             </ul>
-        </section>
-    </div>
+        {% endif %}
+    {% endwith %}
+</div>
 {% endblock %}

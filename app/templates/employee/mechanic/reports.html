@@ -6,6 +6,7 @@
 <div class="reports-container">
     <h1>Отчеты</h1>
     <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label for="task_id">Выберите задачу:</label>
         <select name="task_id" id="task_id" required>
             <option value="">-- Выберите задачу --</option>

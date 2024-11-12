@@ -6,6 +6,7 @@
 <div class="manage-employees-container">
     <h1>Управление сотрудниками</h1>
     <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label for="name">Имя:</label>
         <input type="text" name="name" id="name" required>
         <br>

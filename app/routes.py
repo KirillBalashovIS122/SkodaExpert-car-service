@@ -43,7 +43,6 @@ def register():
         return redirect(url_for('main.login'))
     return render_template('register.html')
 
-
 @main.route('/client_dashboard')
 def client_dashboard():
     # Проверка, что пользователь авторизован и его роль - 'client'
@@ -60,7 +59,6 @@ def client_dashboard():
         return render_template('client/client_dashboard.html', user=user, orders=user_orders, services=services)
 
     return redirect(url_for('main.index'))  # Перенаправление на главную, если не клиент
-
 
 @main.route('/edit_profile', methods=['GET', 'POST'])
 def edit_profile():
@@ -83,7 +81,6 @@ def edit_profile():
         return render_template('client/edit_profile.html', user=user)
 
     return redirect(url_for('main.index'))  # Перенаправление на главную, если не клиент
-
 
 @main.route('/appointments', methods=['GET', 'POST'])
 def appointments():
@@ -221,3 +218,30 @@ def statistics():
         stats = calculate_statistics()
         return render_template('employee/manager/statistics.html', **stats)
     return redirect(url_for('main.index'))
+
+@main.route('/book_service', methods=['POST'])
+def book_service():
+    if 'role' in session and session['role'] == 'client':
+        service_id = request.form.get('service_id')
+        if service_id:
+            # Здесь можно добавить логику для создания записи на услугу
+            flash("Вы успешно записались на услугу!", "success")
+        else:
+            flash("Ошибка при записи на услугу.", "error")
+        return redirect(url_for('main.client_dashboard'))
+    return redirect(url_for('main.index'))
+
+@main.route('/select_services', methods=['GET', 'POST'])
+def select_services():
+    if 'role' in session and session['role'] == 'client':
+        if request.method == 'POST':
+            selected_services = request.form.getlist('services')
+            session['selected_services'] = selected_services
+            return redirect(url_for('main.appointments'))
+        services = Service.query.all()
+        return render_template('client/select_services.html', services=services)
+    return redirect(url_for('main.index'))
+
+@main.route('/appointment_success')
+def appointment_success():
+    return render_template('client/appointment_success.html')
