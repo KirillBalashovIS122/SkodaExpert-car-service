@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
 {% block content %}
     <div class="dashboard-container">
@@ -11,7 +11,7 @@
                 <p><strong>Телефон:</strong> {{ user.phone }}</p>
                 <p><strong>Дата регистрации:</strong> {{ user.created_at }}</p>
             </div>
-            <a href="{{ url_for('main.edit_profile') }}" class="btn btn-primary">Редактировать профиль</a>
+            <a href="{{ url_for('main.edit_profile') }}" class="btn-primary">Редактировать профиль</a>
         </section>
 
         <!-- Заказы клиента -->
@@ -23,7 +23,7 @@
                         <li class="order-item">
                             <strong>Заказ №{{ order.id }}:</strong> {{ order.status }}<br>
                             <em>{{ order.created_at }}</em>
-                            <a href="{{ url_for('main.view_order', order_id=order.id) }}" class="btn btn-info">Посмотреть заказ</a>
+                            <a href="{{ url_for('main.view_order', order_id=order.id) }}" class="btn-info">Посмотреть заказ</a>
                         </li>
                     {% endfor %}
                 </ul>
