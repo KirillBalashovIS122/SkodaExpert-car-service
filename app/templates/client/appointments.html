@@ -1,27 +1,76 @@
-<form method="POST" action="{{ url_for('main.appointments') }}" class="form-container">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <!-- Остальные поля формы для записи на ремонт -->
-    <label for="full_name">ФИО:</label>
-    <input type="text" id="full_name" name="full_name" required>
+{% extends "base.html" %}
 
-    <label for="car_vin">VIN автомобиля:</label>
-    <input type="text" id="car_vin" name="car_vin" required>
+{% block title %}Запись на ремонт{% endblock %}
 
-    <label for="car_plate">Госномер автомобиля:</label>
-    <input type="text" id="car_plate" name="car_plate" required>
+{% block content %}
+<div class="appointments-container">
+    <h1>Запись на ремонт</h1>
+    <form id="appointmentForm" method="POST" action="{{ url_for('main.appointments') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="full_name">ФИО:</label>
+        <input type="text" id="full_name" name="full_name" required>
 
-    <label for="phone">Телефон:</label>
-    <input type="text" id="phone" name="phone" required>
+        <label for="car_model">Модель автомобиля:</label>
+        <select id="car_model" name="car_model" required>
+            <option value="">-- Выберите модель --</option>
+            <option value="octavia">Skoda Octavia</option>
+            <option value="kodiaq">Skoda Kodiaq</option>
+            <option value="superb">Skoda Superb</option>
+        </select>
 
-    <label for="car_year">Год выпуска:</label>
-    <input type="number" id="car_year" name="car_year" required>
+        <label for="car_vin">VIN автомобиля:</label>
+        <input type="text" id="car_vin" name="car_vin" required>
 
-    <label for="slot_id">Слот для записи:</label>
-    <select id="slot_id" name="slot_id" required>
-        {% for slot in available_slots %}
-            <option value="{{ slot.id }}">{{ slot.appointment_date }} - {{ slot.start_time }} до {{ slot.end_time }}</option>
-        {% endfor %}
-    </select>
+        <label for="car_plate">Госномер автомобиля:</label>
+        <input type="text" id="car_plate" name="car_plate" required>
 
-    <button type="submit">Записаться на ремонт</button>
-</form>
+        <label for="phone">Телефон:</label>
+        <input type="text" id="phone" name="phone" required>
+
+        <label for="car_year">Год выпуска:</label>
+        <input type="number" id="car_year" name="car_year" required>
+
+        <label for="appointment_date">Дата и время записи:</label>
+        <input type="text" id="appointment_date" name="appointment_date" required>
+
+        <button type="submit">Записаться на ремонт</button>
+    </form>
+</div>
+
+<script>
+    flatpickr("#appointment_date", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        minDate: "today",
+        time_24hr: true,
+        locale: "ru"
+    });
+
+    document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var form = event.target;
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = "{{ url_for('main.appointment_success') }}";
+            } else {
+                alert('Ошибка при записи на ремонт');
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка при отправке формы');
+        });
+    });
+</script>
+{% endblock %}

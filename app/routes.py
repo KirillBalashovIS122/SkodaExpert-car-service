@@ -1,11 +1,20 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, make_response, flash
+from flask import Blueprint, render_template, request, redirect, url_for, session, make_response, flash, jsonify, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import timedelta, datetime
 from .models import User, Car, Service, Order, Task, Report, AppointmentSlot
 from . import db, csrf
 from .utils import get_current_user, generate_pdf, calculate_statistics
+import logging
 
 main = Blueprint('main', __name__)
+
+# Настройка логирования
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    handlers=[
+                        logging.FileHandler("app.log"),
+                        logging.StreamHandler()
+                    ])
 
 @main.route('/')
 def index():
@@ -85,38 +94,45 @@ def edit_profile():
 @main.route('/appointments', methods=['GET', 'POST'])
 def appointments():
     if 'role' in session and session['role'] == 'client':
-        selected_services = session.get('selected_services')
-        if not selected_services:
-            return redirect(url_for('main.services'))
-
-        total_duration = sum(Service.query.get(int(service_id)).duration for service_id in selected_services)
-
         if request.method == 'POST':
             full_name = request.form.get('full_name')
             vin_number = request.form.get('car_vin')
             car_plate = request.form.get('car_plate')
             phone = request.form.get('phone')
             car_year = request.form.get('car_year')
-            slot_id = request.form.get('slot_id')
+            appointment_date = request.form.get('appointment_date')
 
-            slot = AppointmentSlot.query.get(slot_id)
-            if not slot or not slot.is_available:
-                flash("Этот слот недоступен", "error")
-                return redirect(url_for('main.appointments'))
+            # Логирование для отладки
+            current_app.logger.info(f"Form data: {full_name}, {vin_number}, {car_plate}, {phone}, {car_year}, {appointment_date}")
 
-            end_time = datetime.combine(slot.appointment_date, slot.start_time) + timedelta(hours=total_duration)
-            if end_time.time() > slot.end_time:
-                flash("Недостаточно времени для записи на эту услугу", "error")
-                return redirect(url_for('main.appointments'))
+            # Проверка наличия user_id в сессии
+            if 'user_id' not in session:
+                current_app.logger.error("User ID not found in session")
+                return jsonify({'success': False, 'error': 'User ID not found in session'}), 400
 
-            slot.is_available = 0
-            db.session.commit()
+            # Проверка существования клиента
+            client = User.query.get(session['user_id'])
+            if not client:
+                current_app.logger.error("Client not found")
+                return jsonify({'success': False, 'error': 'Client not found'}), 400
 
-            new_order = Order(user_id=session['user_id'], car_id=1)
-            db.session.add(new_order)
-            db.session.commit()
+            # Проверка существования автомобиля
+            car = Car.query.filter_by(vin=vin_number, client_id=session['user_id']).first()
+            if not car:
+                current_app.logger.error("Car not found")
+                return jsonify({'success': False, 'error': 'Car not found'}), 400
 
-            return redirect(url_for('main.generate_order_pdf', order_id=new_order.id))
+            try:
+                # Создаем новый заказ
+                new_order = Order(client_id=session['user_id'], car_id=car.id)
+                db.session.add(new_order)
+                db.session.commit()
+                current_app.logger.info(f"Order created successfully: {new_order.id}")
+                return jsonify({'success': True})
+            except Exception as e:
+                current_app.logger.error(f"Error creating order: {e}")
+                db.session.rollback()
+                return jsonify({'success': False, 'error': 'Error creating order'}), 500
 
         today = datetime.now().date()
         available_slots = AppointmentSlot.query.filter(
@@ -124,9 +140,7 @@ def appointments():
             AppointmentSlot.is_available == 1
         ).all()
 
-        services = [Service.query.get(int(service_id)) for service_id in selected_services]
-
-        return render_template('client/appointments.html', available_slots=available_slots, services=services)
+        return render_template('client/appointments.html', available_slots=available_slots)
 
     return redirect(url_for('main.index'))
 

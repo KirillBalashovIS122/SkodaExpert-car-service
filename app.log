@@ -1,0 +1,53 @@
+2024-11-13 08:19:41,088 - werkzeug - INFO -  * Restarting with stat
+2024-11-13 08:19:41,500 - werkzeug - WARNING -  * Debugger is active!
+2024-11-13 08:19:41,502 - werkzeug - INFO -  * Debugger PIN: 118-881-463
+2024-11-13 08:19:41,624 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2024-11-13 08:19:43,860 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:43] "GET / HTTP/1.1" 200 -
+2024-11-13 08:19:43,929 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-11-13 08:19:43,930 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:43] "[36mGET /static/csrf.js HTTP/1.1[0m" 304 -
+2024-11-13 08:19:43,930 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:43] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-11-13 08:19:44,164 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2024-11-13 08:19:46,346 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:46] "GET /login HTTP/1.1" 200 -
+2024-11-13 08:19:46,371 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:46] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-11-13 08:19:46,374 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:46] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-11-13 08:19:46,375 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:46] "[36mGET /static/csrf.js HTTP/1.1[0m" 304 -
+2024-11-13 08:19:52,737 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:52] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-11-13 08:19:52,751 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:52] "GET /client_dashboard HTTP/1.1" 200 -
+2024-11-13 08:19:52,781 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:52] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-11-13 08:19:52,782 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:52] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-11-13 08:19:52,782 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:52] "[36mGET /static/csrf.js HTTP/1.1[0m" 304 -
+2024-11-13 08:19:54,231 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:54] "[32mPOST /select_services HTTP/1.1[0m" 302 -
+2024-11-13 08:19:54,242 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:54] "GET /appointments HTTP/1.1" 200 -
+2024-11-13 08:19:54,272 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:54] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-11-13 08:19:54,274 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:54] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-11-13 08:19:54,274 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:19:54] "[36mGET /static/csrf.js HTTP/1.1[0m" 304 -
+2024-11-13 08:20:11,193 - app - INFO - Form data: Балашов Кирилл Алексеевич, TMBJJ7NE4J0000001, М922ТМ33, +79042550556, 2021, 2024-11-13 12:00
+2024-11-13 08:20:11,197 - app - ERROR - Error creating order: (fdb.fbcore.DatabaseError) ('Error while executing Stored Procedure:\n- SQLCODE: -625\n- validation error for column "ORDERS"."CLIENT_ID", value "*** null ***"', -625, 335544347)
+[SQL: INSERT INTO orders (user_id, car_id, created_at) VALUES (?, ?, CURRENT_TIMESTAMP) RETURNING orders.id]
+[parameters: (4, 1)]
+(Background on this error at: https://sqlalche.me/e/14/4xp6)
+2024-11-13 08:20:11,198 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:20:11] "[35m[1mPOST /appointments HTTP/1.1[0m" 500 -
+2024-11-13 08:31:07,149 - werkzeug - INFO -  * Restarting with stat
+2024-11-13 08:31:07,586 - werkzeug - WARNING -  * Debugger is active!
+2024-11-13 08:31:07,589 - werkzeug - INFO -  * Debugger PIN: 118-881-463
+2024-11-13 08:31:07,657 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2024-11-13 08:31:21,288 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:21] "GET / HTTP/1.1" 200 -
+2024-11-13 08:31:21,431 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:21] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-11-13 08:31:21,432 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:21] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-11-13 08:31:21,432 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:21] "[36mGET /static/csrf.js HTTP/1.1[0m" 304 -
+2024-11-13 08:31:23,485 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:23] "GET /login HTTP/1.1" 200 -
+2024-11-13 08:31:23,509 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:23] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-11-13 08:31:23,511 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:23] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-11-13 08:31:23,512 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:23] "[36mGET /static/csrf.js HTTP/1.1[0m" 304 -
+2024-11-13 08:31:25,181 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:25] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-11-13 08:31:25,196 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:25] "GET /client_dashboard HTTP/1.1" 200 -
+2024-11-13 08:31:25,223 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:25] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-11-13 08:31:25,224 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:25] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-11-13 08:31:25,225 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:25] "[36mGET /static/csrf.js HTTP/1.1[0m" 304 -
+2024-11-13 08:31:26,826 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:26] "[32mPOST /select_services HTTP/1.1[0m" 302 -
+2024-11-13 08:31:26,836 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:26] "GET /appointments HTTP/1.1" 200 -
+2024-11-13 08:31:26,863 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:26] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2024-11-13 08:31:26,864 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:26] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2024-11-13 08:31:26,865 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:26] "[36mGET /static/csrf.js HTTP/1.1[0m" 304 -
+2024-11-13 08:31:38,620 - app - INFO - Form data: Балашов Кирилл Алексеевич, TMBJJ7NE4J0000001, М922ТМ33, +79042550556, 2021, 2024-11-13 12:00
+2024-11-13 08:31:38,632 - werkzeug - INFO - 127.0.0.1 - - [13/Nov/2024 08:31:38] "[35m[1mPOST /appointments HTTP/1.1[0m" 500 -

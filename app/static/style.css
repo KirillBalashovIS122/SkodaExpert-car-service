@@ -31,24 +31,26 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
+    color: #fff; /* Белый цвет */
     text-decoration: none;
+    transition: color 0.3s ease; /* Плавный переход цвета */
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    color: #ddd; /* Светло-серый цвет при наведении */
 }
 
 main {
     padding: 20px;
+    min-height: calc(100vh - 120px); /* Высота основного контента */
 }
 
 footer {
     background-color: #4CAF50; /* Зеленый цвет */
     color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
+    text-align: left;
+    padding: 10px 20px;
+    position: relative;
     width: 100%;
     bottom: 0;
 }
@@ -276,4 +278,52 @@ footer {
 .appointment-success-container .btn-info {
     display: inline-block;
     margin: 0 10px;
+}
+
+/* Стили для страницы записи на ремонт */
+.appointments-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.appointments-container h1 {
+    text-align: center;
+    color: #4CAF50; /* Зеленый цвет */
+}
+
+.appointments-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointments-container label {
+    margin-bottom: 5px;
+    color: #4CAF50; /* Зеленый цвет */
+}
+
+.appointments-container input,
+.appointments-container select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.appointments-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50; /* Зеленый цвет */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.appointments-container button:hover {
+    background-color: #45a049; /* Темно-зеленый цвет */
 }
