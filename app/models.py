@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean, Text, ForeignKey
-from . import db  # Предполагается, что объект db импортируется из вашего файла с конфигурацией базы данных
+from . import db
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -12,10 +12,19 @@ class User(db.Model):
     role = db.Column(String(50, collation="UTF8"))
     created_at = db.Column(DateTime, default=datetime.utcnow)
 
+class Client(db.Model):
+    __tablename__ = 'CLIENTS'
+    id = db.Column(Integer, primary_key=True)
+    name = db.Column(String(100, collation="UTF8"), nullable=False)
+    email = db.Column(String(100, collation="UTF8"), nullable=False, unique=True)
+    phone = db.Column(String(15, collation="UTF8"), nullable=False, unique=True)
+    password = db.Column(String(200, collation="UTF8"), nullable=False)
+    created_at = db.Column(DateTime, default=db.func.current_timestamp())
+
 class Car(db.Model):
     __tablename__ = 'cars'
     id = db.Column(Integer, primary_key=True)
-    user_id = db.Column(Integer, ForeignKey('users.id'), nullable=False)
+    client_id = db.Column(Integer, db.ForeignKey('CLIENTS.id'), nullable=False)
     model = db.Column(String(100, collation="UTF8"), nullable=False)
     car_year = db.Column(Integer, nullable=False)
     vin = db.Column(String(17, collation="UTF8"), nullable=False)
@@ -33,22 +42,22 @@ class Service(db.Model):
 class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(Integer, primary_key=True)
-    user_id = db.Column(Integer, ForeignKey('users.id'), nullable=False)
-    car_id = db.Column(Integer, ForeignKey('cars.id'), nullable=False)
+    client_id = db.Column(Integer, db.ForeignKey('CLIENTS.ID'), nullable=False)  # Используйте правильное имя столбца
+    car_id = db.Column(Integer, db.ForeignKey('cars.id'), nullable=False)
     created_at = db.Column(DateTime, default=db.func.current_timestamp())
 
 class Task(db.Model):
     __tablename__ = 'tasks'
     id = db.Column(Integer, primary_key=True)
-    employee_id = db.Column(Integer, ForeignKey('users.id'), nullable=False)
-    order_id = db.Column(Integer, ForeignKey('orders.id'), nullable=False)
+    employee_id = db.Column(Integer, db.ForeignKey('users.id'), nullable=False)
+    order_id = db.Column(Integer, db.ForeignKey('orders.id'), nullable=False)
     status = db.Column(String(50, collation="UTF8"), default='pending')
     created_at = db.Column(DateTime, default=db.func.current_timestamp())
 
 class Report(db.Model):
     __tablename__ = 'reports'
     id = db.Column(Integer, primary_key=True)
-    task_id = db.Column(Integer, ForeignKey('tasks.id'), nullable=False)
+    task_id = db.Column(Integer, db.ForeignKey('tasks.id'), nullable=False)
     description = db.Column(Text(collation="UTF8"), nullable=False)
     created_at = db.Column(DateTime, default=db.func.current_timestamp())
 

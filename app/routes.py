@@ -60,7 +60,7 @@ def client_dashboard():
         user = User.query.get(session['user_id'])
 
         # Получаем заказы клиента
-        user_orders = Order.query.filter_by(user_id=session['user_id']).all()
+        user_orders = Order.query.filter_by(client_id=session['user_id']).all()  # Используем client_id вместо user_id
 
         # Получаем список доступных услуг (если нужно)
         services = Service.query.all()
@@ -117,14 +117,14 @@ def appointments():
                 return jsonify({'success': False, 'error': 'Client not found'}), 400
 
             # Проверка существования автомобиля
-            car = Car.query.filter_by(vin=vin_number, client_id=session['user_id']).first()
+            car = Car.query.filter_by(vin=vin_number, client_id=client.id).first()
             if not car:
-                current_app.logger.error("Car not found")
-                return jsonify({'success': False, 'error': 'Car not found'}), 400
+                current_app.logger.info("Car not found, creating new car")
+                car = create_car(client.id, full_name, vin_number, car_plate, car_year)
 
             try:
                 # Создаем новый заказ
-                new_order = Order(client_id=session['user_id'], car_id=car.id)
+                new_order = Order(client_id=client.id, car_id=car.id)
                 db.session.add(new_order)
                 db.session.commit()
                 current_app.logger.info(f"Order created successfully: {new_order.id}")
@@ -133,6 +133,10 @@ def appointments():
                 current_app.logger.error(f"Error creating order: {e}")
                 db.session.rollback()
                 return jsonify({'success': False, 'error': 'Error creating order'}), 500
+
+        # Проверка наличия выбранных услуг в сессии
+        if 'selected_services' not in session:
+            return redirect(url_for('main.select_services'))
 
         today = datetime.now().date()
         available_slots = AppointmentSlot.query.filter(
@@ -143,6 +147,18 @@ def appointments():
         return render_template('client/appointments.html', available_slots=available_slots)
 
     return redirect(url_for('main.index'))
+
+def create_car(client_id, model, vin, license_plate, car_year):
+    new_car = Car(
+        client_id=client_id,
+        model=model,
+        vin=vin,
+        license_plate=license_plate,
+        car_year=car_year
+    )
+    db.session.add(new_car)
+    db.session.commit()
+    return new_car
 
 @main.route('/generate_order_pdf/<int:order_id>')
 def generate_order_pdf(order_id):
